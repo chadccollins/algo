@@ -30,13 +30,15 @@ class Solution(object):
             # ex: result = [2,3], K = 2
             # 2 % (2 + 1) = 2
             if len(result) % (K + 1) == K:
-                result.insert(0, '-')
+                #result.insert(0, '-') # this seems too slow, so build the string backwards and reverse it at the end
+                result += '-'
             
             # prepend the character at i
-            result.insert(0, S[i].upper())
+            # result.insert(0, S[i].upper()) seems too slow
+            result += S[i]
 
         # return the result array joined up as a new license key
-        return ''.join(result)
+        return ''.join(reversed(result)).upper()
 
 S = "2-5g-3-J"
 K = 2
