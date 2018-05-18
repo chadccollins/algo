@@ -43,8 +43,13 @@ class Solution(object):
                 b.next = merge(a, b.next)
                 return b
 
-        # ok, here we go, on to the harder problem
+        if len(lists) == 0:
+            return None
 
+        if len(lists) == 1:
+            return lists[0]
+
+        # ok, here we go, on to the harder problem
         end = len(lists) - 1
         # we will know we're done when we have marched 'end' all the way back up the list
         while end != 0:
