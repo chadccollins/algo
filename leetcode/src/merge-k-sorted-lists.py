@@ -43,6 +43,7 @@ class Solution(object):
                 b.next = merge(a, b.next)
                 return b
 
+        # as always, first some validation
         if len(lists) == 0:
             return None
 
@@ -66,7 +67,7 @@ class Solution(object):
                 i += 1
                 j -= 1
 
-                # when i and j collide, reset end to j, and let the outter loop keep going
+                # when i and j collide, reset end to j, and let the outer loop keep going
                 if i >= j:
                     end = j
         
