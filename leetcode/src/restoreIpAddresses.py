@@ -13,7 +13,8 @@ class Solution:
         # we will know we're done recursing when we've hit the end of the string and dots > 3
         if start == len(s) and dots > 3:
             ip = current
-            result.append(ip)
+            # append the result, but trim the last digit because it'll be a '.'
+            result.append(ip[:-1])
         # else, we're not done, so we need to find the next octet
         else:
             # from s[start] to s[start + 3] add valid octets, then recurse to move on
@@ -38,3 +39,7 @@ class Solution:
 
         # if it's under 256, it's good
         return int(s) <= 255
+
+import sys
+
+print(Solution().restoreIpAddresses("1234"))
