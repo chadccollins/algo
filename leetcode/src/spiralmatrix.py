@@ -34,14 +34,14 @@ class Solution(object):
             for d in range(top + 1, bottom):
                 result.append(matrix[d][right])
             # right to left
-            for l in reversed(range(left, right + 1)):
-                # as long as top < bottom, we still have a row to consume, if top == bottom, there is no row left
-                if top < bottom:
+            # as long as top < bottom, we still have a row to consume, if top == bottom, there is no row left
+            if top < bottom:
+                for l in reversed(range(left, right + 1)):
                     result.append(matrix[bottom][l])
             # bottom to top (+1 so we stop just short of overlap) 
-            for u in reversed(range(top + 1, bottom)):
-                # same thing here, if left < right, there is a column left to consume, but if left == right, there's nothing left
-                if left < right:
+            # same thing here, if left < right, there is a column left to consume, but if left == right, there's nothing left
+            if left < right:
+                for u in reversed(range(top + 1, bottom)):
                     result.append(matrix[u][left])
 
             # now that we've completed a loop, shink our boundries  
