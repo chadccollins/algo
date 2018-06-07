@@ -41,7 +41,27 @@ class Solution(object):
 
         return result 
 
+    def plusOne2(self, digits):
+        """
+        :type digits: List[int]
+        :rtype: List[int]
+        """
+
+        # go thru the digits, backwards, add one and carry if needed
+        for i in reversed(range(0, len(digits))):
+            if digits[i] == 9:
+                digits[i] = 0
+            else:
+                digits[i] += 1
+                return digits
+        
+        digits[0] = 1
+        digits.append(0)
+        return digits
 
 print (Solution().plusOne([1,2,3]))
 print (Solution().plusOne([2,3]))
 print (Solution().plusOne([2,3,4,5]))
+print (Solution().plusOne2([1,2,3]))
+print (Solution().plusOne2([2,3]))
+print (Solution().plusOne2([2,3,4,5]))
