@@ -13,9 +13,11 @@ class Solution(object):
         :type matrix: List[List[int]]
         :rtype: List[int]
         """
+        result = []
+
         # kick out any garbage
         if matrix == []:
-            return
+            return result
 
         # first, maybe figure out our dimensions
         left = 0
@@ -23,21 +25,26 @@ class Solution(object):
         top = 0
         bottom = len(matrix) - 1
 
-        result = []
-
         while left <= right and top <= bottom:
-            for r in range(left, right):
+            # do a loop around the spiral
+            # left to right
+            for r in range(left, right + 1):
                 result.append(matrix[top][r])
-            
+            # top to bottom 
             for d in range(top + 1, bottom):
                 result.append(matrix[d][right])
-
-            for l in reversed(range(right, bottom)):
-                result.append(matrix[bottom][l])
-            
+            # right to left
+            for l in reversed(range(left, right + 1)):
+                # as long as top < bottom, we still have a row to consume, if top == bottom, there is no row left
+                if top < bottom:
+                    result.append(matrix[bottom][l])
+            # bottom to top (+1 so we stop just short of overlap) 
             for u in reversed(range(top + 1, bottom)):
-                result.append(matrix[u][left])
-            
+                # same thing here, if left < right, there is a column left to consume, but if left == right, there's nothing left
+                if left < right:
+                    result.append(matrix[u][left])
+
+            # now that we've completed a loop, shink our boundries  
             left += 1
             right -= 1
             top += 1
@@ -45,9 +52,8 @@ class Solution(object):
 
         return result
 
-
-
 print (Solution().spiralOrder([[ 1, 2, 3 ],
                                   [ 4, 5, 6 ],
                                   [ 7, 8, 9 ]]))
+
 print (Solution().spiralOrder([[2,3]]))
