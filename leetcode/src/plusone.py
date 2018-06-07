@@ -54,7 +54,9 @@ class Solution(object):
             else:
                 digits[i] += 1
                 return digits
-        
+
+        # if we get here, we're looking at a 9999... type number and we've turned it into 0000...
+        # finish the job by adding 1 in a strange way: 1 + 0000... + 0 
         digits[0] = 1
         digits.append(0)
         return digits
