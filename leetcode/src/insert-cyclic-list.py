@@ -66,6 +66,35 @@ class Solution(object):
 
         return head
 
+    # alternate implementation, little bit cleaner maybe, not *quite* right yet
+    def insert2(self, head, insertVal):
+
+        curr = head
+        # create our new node right away, we're going to need it no matter what
+        node = Node(insertVal, None)
+
+        # if we're given an empty list, make a cyclist list out of node, point head at it
+        if curr is None:
+            node.next = node
+            head = node
+        # if insertVal is less than curr.val (aka head.val) move all the way to the end of the list, so we can prepend the new node
+        elif node.val <= curr.val:
+            while curr.next is not head:
+                curr = curr.next
+            # now we are at the last node in the list, insert new node
+            node.next = curr.next
+            curr.next = node
+        # third case, somewhere after head, but before the end
+        else:
+            # move forward until curr.next is greater than node.val
+            while curr.next is not head and curr.next.val < node.val:
+                curr = curr.next
+            # insert it the same way
+            node.next = curr.next
+            curr.next = node
+
+        return head
+        
 
 if __name__ == "__main__":
     head = Node(3, None)
