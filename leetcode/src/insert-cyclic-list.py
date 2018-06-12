@@ -28,30 +28,48 @@ class Solution(object):
         """
 
         if head is None:
-            return Node(None, None)
+            head = Node(insertVal, None)
+            head.next = head
+            return head 
 
         # save a reference to the head, to keep us from going in circles
         curr = head
+        # loop until we find the insert point
 
-        # loop thru the list until we return to where we started
-        while curr.next is not None and curr.next != head:
-            # find the position to insert
-            if insertVal <= curr.val:
-                # insert the node by creating a new node pointed at the current node
-                node = Node(insertVal, curr)
-                # wedge it in between the two nodes
-                curr = node
-                # we're done, bail out
-                return curr
+        while True:
+            # first case, somewhere in the middle of this list 
+            if curr.val < curr.next.val:
+                # if we find a spot where insertVal is between curr and curr.next, we've found our spot 
+                if curr.val <= insertVal and insertVal <= curr.next.val:
+                    break
+                # else, not yet, keep moving forward
+                else:
+                    curr = curr.next
+
+            # second case, we're at the end of the list, now curr.next.val < curr.val
+            elif curr.next.val < curr.val:
+                # we can insert here if insertVal is either the highest or lowest in the list
+                if curr.val <= insertVal or insertVal <= curr.next.val:
+                    break
+                else:
+                    curr = curr.next
+            # keep moving forward
             else:
-                # move forward in the list
+                # one last case, where we have a cycle but the values are all the same
+                if curr.next == head:
+                    break
                 curr = curr.next
-        
+
+        # if we're out of the loop, we've identified our insert point at curr, so insert it!
+        node = Node(insertVal, curr.next)
+        curr.next = node
+
         return head
+
 
 if __name__ == "__main__":
     head = Node(3, None)
-    tail = Node(3, Node(3, Node(4, Node(5, head))))
+    tail = Node(3, Node(3, head))
     head.next = tail
     print (Solution().insert(head, 0))
 
