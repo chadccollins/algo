@@ -28,12 +28,11 @@ class Solution(object):
             char = ord(c) - A 
             expected[char] += 1
         
-        i, count = 0, 0
+        i, count, start = 0, 0, 0
 
         # this will track the start of a window within which we have matched all characters
-        window_start = 0
-        min_window_len = -1
-        min_window_start = -1
+        min_window_len = len(s)
+        min_window_start = 0
         # traverse s
         while i < len(s):
             # record the character found in s
@@ -44,27 +43,28 @@ class Solution(object):
             if found[char] <= expected[char]:
                 count += 1
 
-            # if count == len(t) we have consumed every character
+            # if count == len(t) we have at least found very character
             if count == len(t):
                 # try to find the window
-                wchar = ord(s[window_start]) - A
-                while expected[wchar] == 0 or found[wchar] > expected[wchar]:
+                wchar = ord(s[start]) - A
+                while found[wchar] > expected[wchar]:
                     # consume the character
                     found[wchar] -= 1
                     # move the start forward
-                    window_start += 1
+                    start += 1
 
-                window_len = i - window_start + 1
-                # if we havent yet found a window, or the one we just found is smaller, save it
-                if min_window_len < 0 or min_window_len > window_len:
-                    min_window_len = window_len 
-                    min_window_start = window_start
+                # i is the current location thru s, start is the start of the window where we've found all characters
+                # if the current window (start + 1 to i) is less than the min window
+                if i - start + 1 < min_window_len:
+                    # the reset the minimum window
+                    min_window_len = i - start + 1
+                    min_window_start = start
                 
             # move forward in s
             i += 1
 
         # if we didn't find anything, return empty
-        if min_window_len == -1:
+        if min_window_len == len(s):
             return ""
 
         return s[min_window_start:min_window_start + min_window_len]
